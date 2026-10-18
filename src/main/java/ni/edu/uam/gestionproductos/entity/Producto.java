@@ -1,7 +1,10 @@
 package ni.edu.uam.gestionproductos.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "producto")
@@ -17,11 +20,24 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
+    @JsonIgnore
     private Categoria categoria;
 
     @ManyToOne
     @JoinColumn(name = "proveedor_id")
     private Proveedor proveedor;
+
+    @ManyToMany
+    @JoinTable(
+            name = "producto_etiqueta",
+            joinColumns = @JoinColumn(name = "producto_id"),
+            inverseJoinColumns = @JoinColumn(name = "etiqueta_id")
+    )
+    private Set<Etiqueta> etiquetas = new HashSet<>();
+
+    // Getter y Setter
+    public Set<Etiqueta> getEtiquetas() { return etiquetas; }
+    public void setEtiquetas(Set<Etiqueta> etiquetas) { this.etiquetas = etiquetas; }
 
 
     @Column(name = "precio_venta")

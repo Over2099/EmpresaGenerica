@@ -2,6 +2,8 @@ package ni.edu.uam.gestionproductos.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "categoria")
 public class Categoria {
@@ -23,4 +25,10 @@ public class Categoria {
 
     public boolean isActiva() { return activa; }
     public void setActiva(boolean activa) { this.activa = activa; }
+
+    @OneToMany(mappedBy = "categoria")
+    private List<Producto> productos;
+
+    public List<Producto> getProductos() { return productos; }
+    public void setProductos(List<Producto> productos) { this.productos = productos; }
 }
